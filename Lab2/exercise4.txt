@@ -1,0 +1,4 @@
+print "Enter potential RNA polymerase II promoter sequence:\n";
+$varstring = <>;
+if ($varstring =~ m/TATA[AT]A[AT].{17}[CT][CT]CA[AG][AG]/)
+{print "YES, RNA polymerase II promoter sequence";}
