@@ -1,0 +1,110 @@
+
+#!/pkg/bin/perl -w
+# Program kmerfirst.pl
+# This program finds all the overlapping k-mers of the input string. It builds
+# an associative array where each key is one distinct k-mer in the string,
+# and the associated value is the starting position where that
+#k-mer is FIRST found.  Compare this to kmer2.pl
+
+### PART 1
+print "Input the string\n";
+
+$dna = 'didyoseeasteelrvlashorwasitaflagthere';
+chomp $dna;
+
+#open(Q, "Q.txt") or die "Error: no file found.";
+#$dna = do {local $/; <Q> };
+
+### PART 2
+print "Input the length of the window\n"; 
+$k = <>;
+chomp $k;
+
+
+%kmer = ();                      # This initializes the hash called kmer.
+$i = 1;
+while (length($dna) >= $k) {
+  $dna =~ m/(.{$k})/; 
+  print "$1, $i \n";
+   if (! defined $kmer{$1}) {     #defined is a function that returns true
+                                  # if a value has already been assigned to
+                                  # $kmer{$1}, otherwise it returns false. 
+                                  # the ! character is the negation, so
+                                  # if $kmer{$1} has no value, then it will
+                                  # be assigned the value of $i, the position
+                                  # where the k-mer is first found.
+    $kmer{$1} = $i;     
+	push(@Qarray, $i);  
+   }
+ $i++;
+  $dna = substr($dna, 1, length($dna) -1);
+}
+
+foreach $kmerkey (keys(%kmer)) {
+ print "The first occurrence of string $kmerkey is in position 
+ $kmer{$kmerkey}\n";
+}
+
+### PART 3
+
+# S
+my $counter = 0;
+my @lines;
+open(my $data, "<", "perlblastdata.txt") or die "Could not open: $!\n";
+while(<$data>)  {   
+    chomp;
+    push @lines, $_;
+    $counter = $counter + 1;
+ 
+}
+close $data;
+print join "\n", @lines;
+print "\n";
+#print "$counter\n";
+
+foreach my $j (0..$counter)
+{
+
+%kmer2 = ();                      # This initializes the hash called kmer.
+$i = 1;
+while (length($lines[j]) >= $k) {
+  $lines[j] =~ m/(.{$k})/; 
+  print "$1, $i \n";
+   if (! defined $kmer2{$1}) {     #defined is a function that returns true
+                                  # if a value has already been assigned to
+                                  # $kmer{$1}, otherwise it returns false. 
+                                  # the ! character is the negation, so
+                                  # if $kmer{$1} has no value, then it will
+                                  # be assigned the value of $i, the position
+                                  # where the k-mer is first found.
+    $kmer2{$1} = $i;
+	push(@Sarray, $i);      
+   }
+ $i++;
+  $lines[j] = substr($lines[j], 1, length($lines[j]) -1);
+}
+
+foreach $kmerkey2 (keys(%kmer2)) {
+ print "The first occurrence of string $kmerkey2 is in position 
+ $kmer2{$kmerkey2}\n";
+}
+
+
+}
+
+### PART 4
+
+print join "\n", @Qarray;
+
+print join "\n", @Sarray;
+
+if ($kmerkey == $kmerkey2){
+	print "\nyes $kmer{$kmerkey}";
+}
+
+@Qarr = split(//, $dna);
+
+print join "", @Qarr
+
+
+
